@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd C:/Users/Owner/expense-tracker-ai && node --version && npm --version)",
+      "Bash(cd C:/Users/Owner/expense-tracker-ai && npx create-next-app@latest . --typescript --tailwind --eslint --app --no-src-dir --import-alias \"@/*\" --yes 2>&1)"
+    ]
+  }
+}
