@@ -3,12 +3,12 @@
 import { useMemo } from "react";
 import Link from "next/link";
 import { useExpenses } from "@/lib/hooks/useExpenses";
-import { computeStats, getMonthlyData } from "@/lib/utils";
+import { computeStats, getMonthlyData, exportExpensesCSV } from "@/lib/utils";
 import SummaryCards from "@/components/SummaryCards";
 import SpendingChart from "@/components/SpendingChart";
 import CategoryChart from "@/components/CategoryChart";
 import RecentExpenses from "@/components/RecentExpenses";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, Download } from "lucide-react";
 
 export default function DashboardPage() {
   const { expenses, isLoaded } = useExpenses();
@@ -32,13 +32,22 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-bold text-slate-900">Dashboard</h1>
           <p className="text-slate-500 text-sm mt-1">Welcome back — here's your spending overview.</p>
         </div>
-        <Link
-          href="/add"
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 transition-colors shadow-sm shadow-indigo-200"
-        >
-          <PlusCircle className="w-4 h-4" />
-          Add Expense
-        </Link>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => exportExpensesCSV(expenses)}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-slate-700 text-sm font-semibold hover:bg-slate-50 transition-colors border border-slate-200 shadow-sm"
+          >
+            <Download className="w-4 h-4" />
+            Export Data
+          </button>
+          <Link
+            href="/add"
+            className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 transition-colors shadow-sm shadow-indigo-200"
+          >
+            <PlusCircle className="w-4 h-4" />
+            Add Expense
+          </Link>
+        </div>
       </div>
 
       {/* Summary cards */}

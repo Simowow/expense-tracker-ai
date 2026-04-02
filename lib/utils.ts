@@ -112,6 +112,22 @@ export function getMonthlyData(expenses: Expense[], months = 6) {
   });
 }
 
+export function exportExpensesCSV(expenses: Expense[]): void {
+  const header = "Date,Category,Amount,Description";
+  const rows = expenses.map((e) => {
+    const description = `"${e.description.replace(/"/g, '""')}"`;
+    return `${e.date},${e.category},${e.amount.toFixed(2)},${description}`;
+  });
+  const csv = [header, ...rows].join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `expenses-${format(new Date(), "yyyy-MM-dd")}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 export function getDailyData(expenses: Expense[], year: number, month: number) {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const dailyMap: Record<number, number> = {};
